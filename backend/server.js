@@ -6,6 +6,7 @@ const app = express();
 
 //Routers
 const user = require('./routes/user');
+const student = require('./routes/student');
 
 //Middleware
 const cors = require('./middleware/cors');
@@ -20,6 +21,7 @@ app.use(express.urlencoded({extended:true}));
 
 app.get("/", index);
 app.use("/user", user);
+app.use("/student", student);
 //añadir auth
 app.use(notFound);
 
