@@ -43,9 +43,7 @@ function Students() {
                     <div className='card'>
                         <div className='card-header'>
                             <h4 className='mb-4'>Lista de estudiantes
-                            </h4>
-                            <h4>
-                                <Link to="/home" className='btn btn-danger float-start'>Volver</Link>
+                                <Link to="/home" className='btn btn-danger float-end'>Volver</Link>
                             </h4>
                         </div>
                         <div className='card-body'>

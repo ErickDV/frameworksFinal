@@ -45,8 +45,8 @@ function Certificates() {
                             <h4 className='mb-4'>Lista de certificados
                             </h4>
                             <h4>
-                                <Link to="/home" className='btn btn-danger float-start'>Volver</Link>
-                                <Link to="/home" className='btn btn-success float-end'>Añadir certificado</Link>
+                                <Link to="/certificates/create" className='btn btn-success float-start'>Añadir certificado</Link>
+                                <Link to="/home" className='btn btn-danger float-end'>Volver</Link>
                             </h4>
                         </div>
                         <div className='card-body'>

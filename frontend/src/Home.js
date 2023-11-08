@@ -17,7 +17,8 @@ function Home() {
 
     return (
         <div>
-            <p>Home</p>
+            <p>Bienvenido(a)</p>
+            <button>Salir</button>
             <form onSubmit={handleCert}>
                 <button>Certificados</button>
             </form>
