@@ -8,24 +8,29 @@ function Students() {
 
     useEffect(() => {
         axios.get(`http://localhost:8081/student`).then(res => {
-            console.log(res.data.message)
+            console.log("Prueba");
+            console.log(res.data.message);
             setStudents(res.data.message);
         });
         
     }, [])
 
     var studentDetails = "";
-    studentDetails = students.map( (item,index)=> {
+    studentDetails = students.map( (item,index) => {
         return (
             <tr key={index}>
                 <td>{item.usuarioID}</td>
                 <td>{item.nombre}</td>
                 <td>{item.apellidos}</td>
                 <td>
-                    <Link to="/" className='btn btn-success'>Editar</Link>
+                    <div className='text-center'>
+                        <Link to="/" className='btn btn-primary'>Detalles</Link>
+                    </div>
                 </td>
                 <td>
-                    <Link to="/" className='btn btn-success'>Agregar</Link>
+                    <div className='text-center'>
+                        <Link to="/" className='btn btn-success'>Agregar</Link>
+                    </div>
                 </td>
             </tr>
         )
@@ -37,19 +42,29 @@ function Students() {
                 <div className='col-md-12'>
                     <div className='card'>
                         <div className='card-header'>
-                            <h4>Students List
-                                <Link to="/" className='btn btn-primary float-end'>Volver</Link>
+                            <h4 className='mb-4'>Lista de estudiantes
+                            </h4>
+                            <h4>
+                                <Link to="/home" className='btn btn-danger float-start'>Volver</Link>
                             </h4>
                         </div>
                         <div className='card-body'>
                             <table className='table table-striped'>
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Edit</th>
-                                        <th>Add</th>
+                                        <th>Expediente</th>
+                                        <th>Nombre</th>
+                                        <th>Apellidos</th>
+                                        <th>
+                                        <div className='text-center'>
+                                            Detalles
+                                        </div>
+                                        </th>
+                                        <th>
+                                        <div className='text-center'>
+                                            Agregar certificado
+                                        </div>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,7 +75,6 @@ function Students() {
                     </div>
                 </div>
             </div>
-            <p>Home</p>
         </div>
     )
 }
