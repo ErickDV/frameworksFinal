@@ -29,7 +29,7 @@ function Certificates() {
                 <td>{item.habilidades}</td>
                 <td>
                     <div className='text-center'>
-                        <Link to="/" className='btn btn-primary'>Editar</Link>
+                        <Link to={`/certificates/edit/${item.certificadoID}`} className='btn btn-primary'>Editar</Link>
                     </div>
                 </td>
             </tr>
