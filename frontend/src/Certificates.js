@@ -29,7 +29,7 @@ function Certificates() {
                 <td>{item.habilidades}</td>
                 <td>
                     <div className='text-center'>
-                        <Link to={`/certificates/edit/${item.certificadoID}`} className='btn btn-primary'>Editar</Link>
+                        <Link to={`/certificates/edit/${item.certificadoID}`} className='btn btn-success'>Editar</Link>
                     </div>
                 </td>
             </tr>
@@ -45,7 +45,7 @@ function Certificates() {
                             <h4 className='mb-4'>Lista de certificados
                             </h4>
                             <h4>
-                                <Link to="/certificates/create" className='btn btn-success float-start'>Añadir certificado</Link>
+                                <Link to="/certificates/create" className='btn btn-primary float-start'>Añadir certificado</Link>
                                 <Link to="/home" className='btn btn-danger float-end'>Volver</Link>
                             </h4>
                         </div>

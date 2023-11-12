@@ -1,30 +1,59 @@
 import React, { useEffect, useState } from 'react'
-import {Link, useParams} from 'react-router-dom'
+import {Link, useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 
 function EditCertificate() {
 
     let {id} = useParams();
+    const navigate = useNavigate();
 
-    const [certificate, setCertificate] = useState([]);
-    const [fechaInicio, setFechaInicio] = useState("");
-    const [fechaFin, setFechaFin] = useState("");
 
+    const [certificate, setCertificate] = useState({});
 
     useEffect(() => {
         axios.get(`http://localhost:8081/certificate/${id}`).then(res => {
             console.log("Prueba");
-            console.log(res.data.message);
-            setCertificate(res.data.message);
-    
-            var fechaInicio = new Date(res.data.message[0].fechaInicio);
-            var fechaFin = new Date(res.data.message[0].fechaFin);
-    
-            setFechaInicio(fechaInicio.toISOString().split('T')[0]);
-            setFechaFin(fechaFin.toISOString().split('T')[0]);
+            console.log(res.data.message[0]);
+            const certificateData = res.data.message[0];
+
+            // Convertir las fechas a formato ISOString
+            certificateData.fechaInicio = new Date(certificateData.fechaInicio).toISOString().split('T')[0];
+            certificateData.fechaFin = new Date(certificateData.fechaFin).toISOString().split('T')[0];
+
+            // Actualizar el estado certificate con las fechas en formato ISOString
+            setCertificate(certificateData);
+            console.log("Prueba");
         });
         
-    }, [])
+    }, [id]);
+
+    const handleInput = (e) => {
+        e.persist();
+        setCertificate({...certificate, [e.target.name]: e.target.value});
+    }
+
+    const updateCertificate = (e) => {
+        e.preventDefault();
+
+        const data ={
+            certID: certificate.certificadoID,
+            name: certificate.nombre,
+            startDate: certificate.fechaInicio,
+            endDate: certificate.fechaFin,
+            skills: certificate.habilidades
+        }
+
+        axios.patch(`http://localhost:8081/certificate`, data)
+        .then(res => {
+            alert(res.data.message);
+            navigate('/certificates');
+        })
+        .catch(function (error) {
+            if(error.response){
+                alert(error.response.data.message);
+            }
+        });
+    }
 
 
     return (
@@ -38,26 +67,26 @@ function EditCertificate() {
                             </h4>
                         </div>
                         <div className='card-body'>
-                            <form>
+                            <form onSubmit={updateCertificate}>
                                 <div className='mb-3'>
                                     <label>ID</label>
-                                    <input type='text' name='idCert' className='form-control' value={certificate[0] ? certificate[0].certificadoID : ''} aria-label="readonly input example" readOnly/>
+                                    <input type='text' name='certificadoID' required className='form-control' value={certificate.certificadoID} readOnly/>
                                 </div>
                                 <div className='mb-3'>
                                     <label>Nombre</label>
-                                    <input type='text' name='name' className='form-control' value={certificate[0] ? certificate[0].nombre : ''}/>
+                                    <input type='text' name='nombre' required onChange={handleInput} className='form-control' value={certificate.nombre}/>
                                 </div>
                                 <div className='mb-3'>
                                     <label>Fecha de inicio</label>
-                                    <input type='date' name='startDate' className='form-control' value={fechaInicio}/>
+                                    <input type='date' name='fechaInicio' required onChange={handleInput} className='form-control' value={certificate.fechaInicio}/>
                                 </div>
                                 <div className='mb-3'>
                                     <label>Fecha de fin</label>
-                                    <input type='date' name='endDate' className='form-control' value={fechaFin}/>
+                                    <input type='date' name='fechaFin' required onChange={handleInput} className='form-control' value={certificate.fechaFin}/>
                                 </div>
                                 <div className='mb-3'>
                                     <label>Habilidades</label>
-                                    <input type='text' name='skills' className='form-control' value={certificate[0] ? certificate[0].habilidades : ''}/>
+                                    <input type='text' name='habilidades' value={certificate.habilidades} required onChange={handleInput} className='form-control' />
                                 </div>
                                 <div className='text-center mb-3'>
                                     <button type='submit' className='btn btn-primary'>Guardar cambios</button>
