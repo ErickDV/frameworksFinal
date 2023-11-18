@@ -1,8 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useSignOut } from 'react-auth-kit';
 
-
-function Home() {
+export default function Home() {
 
     const navigate = useNavigate();
     
@@ -13,6 +13,12 @@ function Home() {
     const handleStudent =(event) => {
         event.preventDefault();
         navigate('/students')
+    }
+
+    const singOut = useSignOut();
+    const logout = () => {
+        singOut();
+        navigate('/login')
     }
 
     return (
@@ -31,10 +37,10 @@ function Home() {
                         <button className='btn btn-primary w-100'>Alumnos</button>
                     </form>
                 </div>
-                <button className='btn btn-danger w-100'>Salir</button>
+                <form onSubmit={logout}>
+                    <button className='btn btn-danger w-100'>Salir</button>
+                </form>
             </div>
         </div>
     )
 }
-
-export default Home

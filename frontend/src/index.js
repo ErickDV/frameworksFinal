@@ -4,11 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AuthProvider from 'react-auth-kit';
+import ErorrBoundary from './ErrorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
 root.render(
   <React.StrictMode>
-    <App />
+    <ErorrBoundary fallback = "hubo un error en authprovider">
+      <AuthProvider store={'token'} authType = { 'cookie' } authName = { '_auth' } cookieDomain={window.location.hostname} cookieSecure={false}>
+        <ErorrBoundary fallback = "hubo un error en app">
+          <App/>
+        </ErorrBoundary>
+      </AuthProvider>
+    </ErorrBoundary>
   </React.StrictMode>
 );
 

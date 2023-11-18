@@ -1,26 +1,48 @@
-import React from 'react'
-import Login from './Login'
-import Home from './Home'
-import Students from './Students'
-import Certificates from './Certificates'
-import CreateCertificate from './CreateCertificate'
-import EditCertificate from './EditCertificate'
+import React from 'react';
+import Login from './Login';
+import Home from './Home';
+import Students from './Students';
+import Certificates from './Certificates';
+import CreateCertificate from './CreateCertificate';
+import EditCertificate from './EditCertificate';
+import ErrorBoundary from './ErrorBoundary';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import RequireAuth from 'react-auth-kit';
 
-function App(){
+export default function App(){
   return(
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Login/>}> </Route>
-        <Route path='/login' element={<Login/>}> </Route>
-        <Route path='/home' element={<Home/>}> </Route>
-        <Route path='/students' element={<Students/>}> </Route>
-        <Route path='/certificates' element={<Certificates/>}> </Route>
-        <Route path='/certificates/create' element={<CreateCertificate/>}> </Route>
-        <Route path='/certificates/edit/:id' element={<EditCertificate/>}> </Route>
+          <Route path='/' element={
+            <ErrorBoundary fallback = "error en /"><Login/></ErrorBoundary>}> 
+          </Route>
+
+          <Route path='/login' element={
+            <ErrorBoundary fallback = "error en /login"><Login/></ErrorBoundary>}> 
+          </Route>
+
+          <Route path='/home' element={
+            <RequireAuth loginPath="/login"> <ErrorBoundary fallback = "error en /home"><Home/></ErrorBoundary></RequireAuth>}> 
+          </Route>
+
+          <Route path='/students' element={
+            <RequireAuth loginPath="/login"><ErrorBoundary fallback = "error en /students"> <Students/></ErrorBoundary></RequireAuth>}>
+          </Route>
+            
+          <Route path='/certificates' element={
+            <RequireAuth loginPath="/login"> <ErrorBoundary fallback = "error en /certificates"></ErrorBoundary> <Certificates/></RequireAuth>}>
+          </Route>
+
+          <Route path='/certificates/create' element={
+            <RequireAuth loginPath="/login"><ErrorBoundary fallback = "error en /certificates/create"></ErrorBoundary><CreateCertificate/></RequireAuth>}> 
+          </Route>
+          
+          <Route path='/certificates/edit/:id' element={
+            <RequireAuth loginPath="/login"><ErrorBoundary fallback = "error en /certificates/edit/:id"> </ErrorBoundary><EditCertificate/></RequireAuth>}> 
+          </Route>
+
       </Routes>
     </BrowserRouter>
   )
 }
 
-export default App

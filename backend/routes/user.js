@@ -9,12 +9,14 @@ user.post('/login', (req,res,next)=>{
         if(err) {
             return res.json("Error");
         } if (data.length > 0){
-            return res.json("Success");
+            const JWTtoken = jwt.sign({
+                user_id: req.body.email
+            },"token");
+            return res.json({code: 200, mesagge: 'welcome back' ,token: JWTtoken});
         } else {
             return res.json("Fail");
         }
     })
-
 })
 
 module.exports = user;
