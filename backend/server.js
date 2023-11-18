@@ -8,6 +8,7 @@ const app = express();
 const user = require('./routes/user');
 const student = require('./routes/student');
 const certificate = require('./routes/certificate');
+const relations = require('./routes/relations');
 
 //Middleware
 const cors = require('./middleware/cors');
@@ -24,6 +25,7 @@ app.get("/", index);
 app.use("/user", user);
 app.use("/student", student);
 app.use("/certificate", certificate);
+app.use("/relations", relations);
 //añadir auth
 app.use(notFound);
 

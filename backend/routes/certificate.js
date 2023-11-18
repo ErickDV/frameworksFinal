@@ -3,12 +3,12 @@ const certificate = express.Router();
 const db = require('../config/database');
 
 certificate.get('/', async (req,res,next)=>{
-    const stndt = await db.query("SELECT * FROM certificados");
-    return res.status(200).json({code:200,message:stndt});
+    const crtf = await db.query("SELECT * FROM certificados");
+    return res.status(200).json({code:200,message:crtf});
 })
 
 //Buscar por ID
-certificate.get('/:id([0-9])', async (req,res,next) => {
+certificate.get('/:id([0-9]{1,6})', async (req,res,next) => {
     const id = req.params.id;
     try {
         const crtf = await db.query("SELECT * FROM certificados WHERE certificadoID = ?", [id]);

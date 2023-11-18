@@ -24,12 +24,12 @@ function Students() {
                 <td>{item.apellidos}</td>
                 <td>
                     <div className='text-center'>
-                        <Link to="/" className='btn btn-primary'>Detalles</Link>
+                        <Link to={`/students/details/${item.usuarioID}`} className='btn btn-success'>Detalles</Link>
                     </div>
                 </td>
                 <td>
                     <div className='text-center'>
-                        <Link to="/" className='btn btn-success'>Agregar</Link>
+                        <Link to="/" className='btn btn-primary'>Agregar</Link>
                     </div>
                 </td>
             </tr>
