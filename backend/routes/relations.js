@@ -32,6 +32,12 @@ relations.get('/:id([0-9]{1,6})', async (req,res,next) => {
 relations.post("/", async (req, res, next) => {
     const {studentID,certID} = req.body;
     if(studentID && certID){
+        let existQuery = `SELECT * FROM relaciones WHERE alumnoID = ${studentID} AND certificadoID = ${certID}`;
+        const existRows = await db.query(existQuery);
+        if (existRows.length>0){
+            return res.status(409).json({code:409,message: 'El estudiante ya cuenta con ese certificado.'}); 
+        } //Si la relacion no existe puede pasar al sig. codigo
+
         let query = `INSERT INTO relaciones(alumnoID, certificadoID) `;
         query += `VALUES(${studentID},${certID})`;
         

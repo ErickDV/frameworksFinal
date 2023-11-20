@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-11-2023 a las 03:14:03
+-- Tiempo de generación: 20-11-2023 a las 01:45:52
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -42,7 +42,8 @@ CREATE TABLE `certificados` (
 INSERT INTO `certificados` (`certificadoID`, `nombre`, `fechaInicio`, `fechaFin`, `habilidades`) VALUES
 (1, 'NodeJS', '2023-09-10', '2023-11-10', 'Desarrollo web'),
 (2, 'SQL Avanzado', '2023-09-10', '2023-11-10', 'Bases de datos'),
-(3, 'Django', '2023-09-10', '2023-11-10', 'Desarrollo web');
+(3, 'Django', '2023-09-10', '2023-11-10', 'Desarrollo web'),
+(9, 'React', '2023-11-21', '2023-11-16', 'Frontend');
 
 -- --------------------------------------------------------
 
@@ -55,6 +56,15 @@ CREATE TABLE `relaciones` (
   `alumnoID` int(11) NOT NULL,
   `certificadoID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `relaciones`
+--
+
+INSERT INTO `relaciones` (`relacionID`, `alumnoID`, `certificadoID`) VALUES
+(8, 307078, 1),
+(9, 307078, 2),
+(10, 307079, 9);
 
 -- --------------------------------------------------------
 
@@ -112,13 +122,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `certificados`
 --
 ALTER TABLE `certificados`
-  MODIFY `certificadoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `certificadoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `relaciones`
 --
 ALTER TABLE `relaciones`
-  MODIFY `relacionID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `relacionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

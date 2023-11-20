@@ -25,8 +25,12 @@ function StudentAddCert(){
 
         axios.post(`http://localhost:8081/relations`, data)
         .then(res => {
-            alert(res.data.message);
-            navigate('/students');
+            if (res.status===201){
+                alert(res.data.message);
+                navigate('/students');
+            } else if (res.status === 409){
+                alert(res.data.message);
+            }
         })
         .catch(function (error) {
             if(error.response){
@@ -48,7 +52,12 @@ function StudentAddCert(){
 
         //Obtener info de los certificados
         axios.get(`http://localhost:8081/certificate`).then(res => {
-            setCertificates(res.data.message)
+            const certificatesData = res.data.message;
+            setCertificates(certificatesData);
+
+            if(certificatesData.length > 0){
+                setSelectedCertificate(certificatesData[0].certificadoID);
+            }
         })
         .catch(error => {
             alert("Hubo un error al cargar los datos. ",error);
