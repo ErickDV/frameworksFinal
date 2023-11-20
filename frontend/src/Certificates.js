@@ -8,8 +8,6 @@ function Certificates() {
 
     useEffect(() => {
         axios.get(`http://localhost:8081/certificate`).then(res => {
-            console.log("Prueba");
-            console.log(res.data.message);
             setCertificate(res.data.message);
         });
         
@@ -42,11 +40,11 @@ function Certificates() {
                 <div className='col-md-12'>
                     <div className='card'>
                         <div className='card-header'>
-                            <h4 className='mb-4'>Lista de certificados
+                            <h4 className='mb-3'>Lista de certificados
                             </h4>
                             <h4>
                                 <Link to="/certificates/create" className='btn btn-primary float-start'>Añadir certificado</Link>
-                                <Link to="/home" className='btn btn-danger float-end'>Volver</Link>
+                                <Link to="/home" className='btn btn-danger float-end mb-3'>Volver</Link>
                             </h4>
                         </div>
                         <div className='card-body'>

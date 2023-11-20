@@ -12,39 +12,54 @@ function StudentDetails() {
 
     useEffect(() => {
         axios.get(`http://localhost:8081/student/${id}`).then(res => {
-            console.log("Prueba");
-            console.log(res.data.message[0]);
             const studentData = res.data.message[0];
             setStudent(studentData);
+        })
+        .catch(error => {
+            alert("Hubo un error al cargar los datos. ",error);
         });
 
-        axios.get(`http://localhost:8081/relations/${id}`).then(res => {
-            const certificatesData = res.data.message;
-            setCertificates(certificatesData);
+        axios.get(`http://localhost:8081/relations/${id}`, {
+            validateStatus: function (status) {
+                return status >= 200 && status < 500; // No se lanzará una excepción si el código de estado está en el rango de 200 a 499.
+            }
+        }).then(res => {
+            if (res.status===200){
+                const certificatesData = res.data.message;
+                setCertificates(certificatesData);
+            } else if (res.status === 404){
+                console.log("No hay registros de certificados.")
+            }
+        })
+        .catch(error => {
+            alert("Hubo un error al cargar los datos. ",error);
         });
-
     }, [id]);
 
     var certificatesDetails = "";
-    certificatesDetails = certificates.map( (item,index) => {
-        var fechaInicio = new Date(item.fechaInicio);
-        var fechaFin = new Date(item.fechaFin);
-
-        return (
-            <tr key={index}>
-                <td>{item.certificadoID}</td>
-                <td>{item.nombre}</td>
-                <td>{fechaInicio.toLocaleDateString()}</td>
-                <td>{fechaFin.toLocaleDateString()}</td>
-                <td>{item.habilidades}</td>
-                {/* <td>
-                    <div className='text-center'>
-                        <Link to={`/certificates/edit/${item.certificadoID}`} className='btn btn-success'>Editar</Link>
-                    </div>
-                </td> */}
-            </tr>
-        )
-    });
+    if (certificates.length === 0){
+        certificatesDetails = "No se encontraron registros";
+    } else {
+        certificatesDetails = certificates.map( (item,index) => {
+            var fechaInicio = new Date(item.fechaInicio);
+            var fechaFin = new Date(item.fechaFin);
+    
+            return (
+                <tr key={index}>
+                    <td>{item.certificadoID}</td>
+                    <td>{item.nombre}</td>
+                    <td>{fechaInicio.toLocaleDateString()}</td>
+                    <td>{fechaFin.toLocaleDateString()}</td>
+                    <td>{item.habilidades}</td>
+                    {/* <td>
+                        <div className='text-center'>
+                            <Link to={`/certificates/edit/${item.certificadoID}`} className='btn btn-success'>Editar</Link>
+                        </div>
+                    </td> */}
+                </tr>
+            )
+        });
+    }
 
     return (
         <div className='container mt-5'>
@@ -88,7 +103,13 @@ function StudentDetails() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {certificatesDetails}
+                                    {typeof certificatesDetails === 'string' ? 
+                                        <tr>
+                                            <td colSpan="5">{certificatesDetails}</td>
+                                        </tr> 
+                                        : 
+                                        certificatesDetails
+                                    }
                                 </tbody>
                             </table>
                         </div>

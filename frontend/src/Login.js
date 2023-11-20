@@ -50,7 +50,7 @@ function Login(){
                     
                     navigate('/home');
                 } else {
-                    alert("No record existed");
+                    alert("Usuario y/o contraseña incorrecto. Por favor intente de nuevo.");
                 }
             })
             .catch(err => console.log(err));
@@ -62,6 +62,9 @@ function Login(){
         <div className='d-flex justify-content-center align-items-center bg-primary vh-100'>
             <div className='bg-white p-3 rounded w-25'>
                 <form action='' onSubmit={handleSubmit}>
+                    <div className='border-bottom mb-4'>
+                        <h1>Login</h1>
+                    </div>
                     <div className='mb-3'>
                         <label htmlFor='email'><strong>ID</strong></label>
                         <input type='number' placeholder='Enter email' name='email'

@@ -29,7 +29,7 @@ function Students() {
                 </td>
                 <td>
                     <div className='text-center'>
-                        <Link to="/" className='btn btn-primary'>Agregar</Link>
+                        <Link to={`/students/addCert/${item.usuarioID}`} className='btn btn-primary'>Agregar</Link>
                     </div>
                 </td>
             </tr>

@@ -1,6 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 
 function Home() {
 
@@ -31,7 +30,7 @@ function Home() {
                         <button className='btn btn-primary w-100'>Alumnos</button>
                     </form>
                 </div>
-                <button className='btn btn-danger w-100'>Salir</button>
+                <Link to="/login" className='btn btn-danger float-end  w-100'>Salir</Link>
             </div>
         </div>
     )
