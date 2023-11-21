@@ -19,14 +19,14 @@ function Login(){
         try {
             const response = await axios.post('http://localhost:8081/user/login', values).then((res) => {
                 if(response.data.code === 200){
-                    signIn(
-                    {
+                    if(signIn({
                         token: response.data.token,
                         expiresIn: 3600,
                         tokenType: "Bearer",
                         authState: response.data.user_id
-                    }
-                    );
+                    })){
+
+                    };
                     navigate('/home');
                 } else {
                     alert("No record existed");
