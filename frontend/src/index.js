@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ErorrBoundary from './ErrorBoundary';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { Auth0Provider } from '@auth0/auth0-react'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+        <ErorrBoundary fallback = "error en app">
+          <Auth0Provider>
+            <App />
+          </Auth0Provider>
+        </ErorrBoundary>
   </React.StrictMode>
 );
 
