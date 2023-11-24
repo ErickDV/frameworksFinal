@@ -1,40 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import {Link} from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Validation from './LoginValidation';
 import axios from 'axios';
+import useAuth from './hooks/useAuth';
 
 function Login(){
+    const {setAuth} = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
     const [values, setValues] = useState({
         email: '',
         password: ''
     })
 
-    const navigate = useNavigate();
     const [errors, setErrors] = useState({})
     const handleInput =(event)=>{
         setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
     }
-
-    // const handleSubmit =(event) => {
-    //     event.preventDefault();
-    //     // setErrors(Validation(values));
-
-    //     const err = Validation(values);
-    //     setErrors(err);
-
-    //     if(errors.email === "" && errors.password ===""){
-    //         axios.post('http://localhost:8081/login', values)
-    //         .then(res => {
-    //             if(res.data === "Success"){
-    //                 navigate('/home');
-    //             } else {
-    //                 alert("No record existed");
-    //             }
-    //         })
-    //         .catch(err => console.log(err));
-    //     }
-    // } 
 
     const handleSubmit =(event) => {
         event.preventDefault();
@@ -46,9 +30,11 @@ function Login(){
         if(errors.email === "" && errors.password ===""){
             axios.post('http://localhost:8081/user/login', values)
             .then(res => {
-                if(res.data === "Success"){
-                    
-                    navigate('/home');
+                if(res.data.code === 200){
+                    const accessToken = res.data.token;
+                    const role = res.data.role
+                    setAuth({role, accessToken})
+                    navigate(from, {replace: true});
                 } else {
                     alert("Usuario y/o contraseña incorrecto. Por favor intente de nuevo.");
                 }
