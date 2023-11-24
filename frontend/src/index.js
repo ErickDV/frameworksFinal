@@ -1,24 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AuthProvider from 'react-auth-kit';
-import ErorrBoundary from './ErrorBoundary';
+import ErorrBoundary from './components/ErrorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
 root.render(
   <React.StrictMode>
-    <ErorrBoundary fallback = "hubo un error en authprovider">
-      <AuthProvider store={'token'} authType = { 'cookie' } authName = { '_auth' } cookieDomain={window.location.hostname} cookieSecure={false}>
+
         <ErorrBoundary fallback = "hubo un error en app">
           <App/>
         </ErorrBoundary>
-      </AuthProvider>
-    </ErorrBoundary>
+
   </React.StrictMode>
 );
 
