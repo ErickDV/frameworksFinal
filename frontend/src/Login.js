@@ -25,7 +25,7 @@ function Login(){
         const err = Validation(values); 
         setErrors(err);
     }
-
+    
     useEffect(() => {
         if(errors.email === "" && errors.password ===""){
             axios.post('http://localhost:8081/user/login', values)
@@ -33,8 +33,11 @@ function Login(){
                 if(res.data.code === 200){
                     const accessToken = res.data.token;
                     const role = res.data.role
+                    console.log(res.data.role)
+                    console.log(res.data.token)
                     setAuth({role, accessToken})
                     navigate(from, {replace: true});
+                   
                 } else {
                     alert("Usuario y/o contraseña incorrecto. Por favor intente de nuevo.");
                 }
