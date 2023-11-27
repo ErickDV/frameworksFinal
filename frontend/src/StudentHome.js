@@ -3,10 +3,18 @@ import {Link, useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 
 const StudentHome = () => {
-    const [certificates, setCertificates] = useState({})
-    const id = localStorage.getItem("id")
+    const [student, setStudent] = useState({});
+    const [certificates, setCertificates] = useState({});
+    const id = localStorage.getItem("id");
     
     useEffect(() =>{
+        axios.post('http://localhost:8081/studentD/getS',{id:id})
+        .then(res=>{
+            console.log(res, "info alumno")
+            const studentData = res.data.message;
+            setStudent(studentData);
+        })
+
         axios.post('http://localhost:8081/studentD/getC',{id:id})
         .then(res=>{
             const idC = res.data.message
@@ -20,9 +28,10 @@ const StudentHome = () => {
                 console.log(certificates)
             })           
         })
-    }, [id])
+    }, [id]);
 
-    console.log(certificates, "porno")
+    console.log(certificates, "porno");
+    console.log(student, "porno2");
     
     var certificatesDetails = "";
     if (certificates.length === 0){
@@ -60,7 +69,20 @@ const StudentHome = () => {
                             </h4>
                         </div>
                         <div className='card-body'>
-                        
+                            <form>
+                                <div className='mb-3'>
+                                    <label>ID</label>
+                                    <input type='text' required className='form-control' value={student.usuarioID} readOnly/>
+                                </div>
+                                <div className='mb-3'>
+                                    <label>Nombre</label>
+                                    <input type='text' required className='form-control' value={student.nombre} readOnly/>
+                                </div>
+                                <div className='mb-3'>
+                                    <label>Apellidos</label>
+                                    <input type='text' value={student.apellidos} required className='form-control' readOnly/>
+                                </div>
+                            </form>
                             <h4 className='mb-4 mt-4'>Certificados</h4>
                             <table className='table table-striped'>
                                 <thead>
