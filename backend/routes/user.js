@@ -9,12 +9,18 @@ user.post('/login', (req,res,next)=>{
         if(err) {
             return res.json("Error");
         } if (data.length > 0){
-            return res.json("Success");
+            const JWTtoken = jwt.sign({
+                user_id: req.body.email
+            },"token");
+            const usrID = data[0].usuarioID
+            data[0].rol === 'Admin' 
+            ? res.json({code: 200, mesagge: 'welcome back' ,token: JWTtoken})
+            : res.json({code: 210, mesagge: 'welcome student' ,token: JWTtoken, id: usrID})
+            
         } else {
             return res.json("Fail");
         }
     })
-
 })
 
 module.exports = user;

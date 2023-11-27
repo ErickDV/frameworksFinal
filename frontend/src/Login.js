@@ -46,10 +46,14 @@ function Login(){
         if(errors.email === "" && errors.password ===""){
             axios.post('http://localhost:8081/user/login', values)
             .then(res => {
-                if(res.data === "Success"){
-                    
+                if(res.data.code === 200){
+                    console.log(res)
                     navigate('/home');
-                } else {
+                } else if(res.data.code === 210){
+                    navigate('/studentHome')
+                    console.log(res.data.id) //debugging
+                    localStorage.setItem("id", res.data.id);
+                }else {
                     alert("Usuario y/o contraseña incorrecto. Por favor intente de nuevo.");
                 }
             })

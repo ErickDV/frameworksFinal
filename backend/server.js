@@ -15,6 +15,7 @@ const cors = require('./middleware/cors');
 const auth = require('./middleware/auth');
 const index = require('./middleware/index');
 const notFound = require('./middleware/notFound');
+const studentD = require('./routes/studentD')
 
 app.use(cors);
 app.use(morgan('dev'));
@@ -24,6 +25,7 @@ app.use(express.urlencoded({extended:true}));
 app.get("/", index);
 app.use("/user", user);
 app.use("/student", student);
+app.use("/studentD", studentD);
 app.use("/certificate", certificate);
 app.use("/relations", relations);
 //añadir auth
