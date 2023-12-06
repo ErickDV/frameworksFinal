@@ -50,7 +50,7 @@ function EditCertificate() {
             skills: certificate.habilidades
         }
 
-        axios.patch(`http://localhost:8081/certificate`, data)
+        axios.patch(`http://localhost:8081/certificate`, data, headers)
         .then(res => {
             alert(res.data.message);
             navigate('/certificates');

@@ -13,6 +13,7 @@ const relations = require('./routes/relations');
 //Middleware
 const cors = require('./middleware/cors');
 const auth = require('./middleware/auth');
+const {authPage} = require('./middleware/roles');
 const index = require('./middleware/index');
 const notFound = require('./middleware/notFound');
 
@@ -24,9 +25,9 @@ app.use(express.urlencoded({extended:true}));
 app.get("/", index);
 app.use("/user", user);
 app.use(auth);
-app.use("/student", student);
-app.use("/certificate", certificate);
-app.use("/relations", relations);
+app.use("/student", authPage(["Admin"]), student);
+app.use("/certificate", authPage(["Admin"]), certificate);
+app.use("/relations", authPage(["Admin"]), relations);
 //añadir auth
 app.use(notFound);
 

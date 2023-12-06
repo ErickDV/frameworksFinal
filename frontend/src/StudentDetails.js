@@ -22,6 +22,7 @@ function StudentDetails() {
         })
         .catch(error => {
             alert("Hubo un error al cargar los datos. ",error);
+            navigate('/students')
         });
 
         axios.get(`http://localhost:8081/relations/${id}`, headers, {

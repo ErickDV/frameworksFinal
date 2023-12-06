@@ -10,8 +10,10 @@ user.post('/login', (req,res,next)=>{
             return res.json("Error");
         } if (data.length > 0){
             const id = data[0].usuarioID;
+            const role = data[0].rol;
             const token = jwt.sign({id},"debugkey",{});
-            return res.status(200).json({code:200, message:token});
+            const roleToken = jwt.sign({role},"debugkey",{});
+            return res.status(200).json({code:200, token:token, roleToken:roleToken});
         } else {
             return res.status(200).json({code:401,message:"Usuario y/o contraseña incorrectos."});
         }

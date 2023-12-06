@@ -27,7 +27,8 @@ function Login(){
             axios.post('http://localhost:8081/user/login', values)
             .then(res => {
                 if(res.data.code === 200){
-                    localStorage.setItem("token", res.data.message);
+                    localStorage.setItem("token", res.data.token);
+                    localStorage.setItem("roleToken", res.data.roleToken);
                     navigate('/home');
                 } else if (res.data.code === 401) {
                     alert("Usuario y/o contraseña incorrecto. Por favor intente de nuevo.");
@@ -45,22 +46,21 @@ function Login(){
             <div className='bg-white p-3 rounded w-25'>
                 <form action='' onSubmit={handleSubmit}>
                     <div className='border-bottom mb-4'>
-                        <h1>Login</h1>
+                        <h1>Inicio de sesión</h1>
                     </div>
                     <div className='mb-3'>
-                        <label htmlFor='email'><strong>ID</strong></label>
+                        <label htmlFor='email'><strong>Expediente</strong></label>
                         <input type='number' placeholder='Enter email' name='email'
                         onChange={handleInput} className='form-control rounded-0'/>
                         {errors.email && <span className='text-danger'> {errors.email}</span>}
                     </div>
                     <div className='mb-3'>
-                        <label htmlFor='password'><strong>Password</strong></label>
+                        <label htmlFor='password'><strong>Contraseña</strong></label>
                         <input type='password' placeholder='Enter password' name='password'
                         onChange={handleInput} className='form-control rounded-0'/>
                         {errors.password && <span className='text-danger'> {errors.password}</span>}
                     </div>
                     <button type='submit' className='btn btn-success w-100 rounded-0'> <strong>Log in </strong></button>
-                    <p>You are agree to our terms and policies</p>
 
                 </form>
             </div>
