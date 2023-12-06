@@ -4,12 +4,26 @@ import axios from 'axios';
 
 function StudentAddCert(){
 
+    const navigate = useNavigate();
+    var headers = {};
+
+    //Obtener el token desde headers
+    if(localStorage.getItem("token")){
+        headers = {
+            headers: {
+                'Authorization': "bearer " + localStorage.getItem("token")
+            }
+        }
+    }else{
+        //Regresar en caso de no existir token
+        navigate('/home');
+    }
+
     const handleInput = (e) => {
         setSelectedCertificate(e.target.value);
     };
 
     let {id} = useParams();
-    const navigate = useNavigate();
 
     const [student, setStudent] = useState({});
     const [certificates, setCertificates] = useState([]);
@@ -23,7 +37,7 @@ function StudentAddCert(){
             certID: selectedCertificate
         }
 
-        axios.post(`http://localhost:8081/relations`, data)
+        axios.post(`http://localhost:8081/relations`, data, headers)
         .then(res => {
             if (res.status===201){
                 alert(res.data.message);

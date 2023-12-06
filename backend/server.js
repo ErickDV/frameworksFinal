@@ -23,6 +23,7 @@ app.use(express.urlencoded({extended:true}));
 
 app.get("/", index);
 app.use("/user", user);
+app.use(auth);
 app.use("/student", student);
 app.use("/certificate", certificate);
 app.use("/relations", relations);

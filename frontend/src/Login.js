@@ -46,8 +46,8 @@ function Login(){
         if(errors.email === "" && errors.password ===""){
             axios.post('http://localhost:8081/user/login', values)
             .then(res => {
-                if(res.data === "Success"){
-                    
+                if(res.data.code === 200){
+                    localStorage.setItem("token", res.data.message);
                     navigate('/home');
                 } else {
                     alert("Usuario y/o contraseña incorrecto. Por favor intente de nuevo.");

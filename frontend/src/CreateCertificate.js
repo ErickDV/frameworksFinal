@@ -5,6 +5,20 @@ import axios from 'axios';
 function CreateCertificate() {
 
     const navigate = useNavigate();
+    var headers = {};
+
+    //Obtener el token desde headers
+    if(localStorage.getItem("token")){
+        headers = {
+            headers: {
+                'Authorization': "bearer " + localStorage.getItem("token")
+            }
+        }
+    }else{
+        //Regresar en caso de no existir token
+        navigate('/home');
+    }
+
     const [certificate, setCertificate] = useState({
         name: '',
         startDate: '',
@@ -27,7 +41,7 @@ function CreateCertificate() {
             skills: certificate.skills,
         }
 
-        axios.post(`http://localhost:8081/certificate`, data)
+        axios.post(`http://localhost:8081/certificate`, data,headers)
         .then(res => {
             alert(res.data.message);
             navigate('/certificates');

@@ -1,14 +1,34 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import axios from 'axios';
 
 function Certificates() {
 
+    const navigate = useNavigate();
+    var headers = {};
+
+    //Obtener el token desde headers
+    if(localStorage.getItem("token")){
+        headers = {
+            headers: {
+                'Authorization': "bearer " + localStorage.getItem("token")
+            }
+        }
+    }else{
+        //Regresar en caso de no existir token
+        navigate('/home');
+    }
+
     const [certificates, setCertificate] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/certificate`).then(res => {
+        axios.get(`http://localhost:8081/certificate`,headers).then(res => {
             setCertificate(res.data.message);
+        })
+        .catch(err => {
+            //Regresar al login en caso de no estar autorizado
+            navigate('/home');
         });
         
     }, [])

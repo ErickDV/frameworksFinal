@@ -5,13 +5,27 @@ import axios from 'axios';
 function EditCertificate() {
 
     let {id} = useParams();
+    
     const navigate = useNavigate();
+    var headers = {};
+
+    //Obtener el token desde headers
+    if(localStorage.getItem("token")){
+        headers = {
+            headers: {
+                'Authorization': "bearer " + localStorage.getItem("token")
+            }
+        }
+    }else{
+        //Regresar en caso de no existir token
+        navigate('/home');
+    }
 
 
     const [certificate, setCertificate] = useState({});
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/certificate/${id}`).then(res => {
+        axios.get(`http://localhost:8081/certificate/${id}`,headers).then(res => {
             console.log("Prueba");
             console.log(res.data.message[0]);
             const certificateData = res.data.message[0];

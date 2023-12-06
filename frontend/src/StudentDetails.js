@@ -6,12 +6,25 @@ function StudentDetails() {
 
     let {id} = useParams();
     const navigate = useNavigate();
+    var headers = {};
+
+    //Obtener el token desde headers
+    if(localStorage.getItem("token")){
+        headers = {
+            headers: {
+                'Authorization': "bearer " + localStorage.getItem("token")
+            }
+        }
+    }else{
+        //Regresar en caso de no existir token
+        navigate('/home');
+    }
 
     const [student, setStudent] = useState({});
     const [certificates, setCertificates] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/student/${id}`).then(res => {
+        axios.get(`http://localhost:8081/student/${id}`, headers).then(res => {
             const studentData = res.data.message[0];
             setStudent(studentData);
         })
@@ -19,7 +32,7 @@ function StudentDetails() {
             alert("Hubo un error al cargar los datos. ",error);
         });
 
-        axios.get(`http://localhost:8081/relations/${id}`, {
+        axios.get(`http://localhost:8081/relations/${id}`, headers, {
             validateStatus: function (status) {
                 return status >= 200 && status < 500; // No se lanzará una excepción si el código de estado está en el rango de 200 a 499.
             }
