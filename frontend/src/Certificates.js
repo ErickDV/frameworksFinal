@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import {getAuthHeaders} from './GetAuthHeaders';
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import axios from 'axios';
@@ -6,18 +7,10 @@ import axios from 'axios';
 function Certificates() {
 
     const navigate = useNavigate();
-    var headers = {};
 
-    //Obtener el token desde headers
-    if(localStorage.getItem("token")){
-        headers = {
-            headers: {
-                'Authorization': "bearer " + localStorage.getItem("token")
-            }
-        }
-    }else{
-        //Regresar en caso de no existir token
-        navigate('/home');
+    const headers = getAuthHeaders();
+    if (!headers) {
+        navigate('/login');
     }
 
     const [certificates, setCertificate] = useState([]);
@@ -27,10 +20,9 @@ function Certificates() {
             setCertificate(res.data.message);
         })
         .catch(err => {
-            //Regresar al login en caso de no estar autorizado
-            navigate('/home');
+            alert("Ocurrio un error en el sistema, por favor intente de nuevo.")
+            navigate('/login');
         });
-        
     }, [])
 
     var certificatesDetails = "";

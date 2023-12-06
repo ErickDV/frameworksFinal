@@ -1,31 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+import {getAuthHeaders} from './GetAuthHeaders';
 import axios from 'axios';
 
 function Students() {
 
     const navigate = useNavigate();
-    var headers = {};
-
-    //Obtener el token desde headers
-    if(localStorage.getItem("token")){
-        headers = {
-            headers: {
-                'Authorization': "bearer " + localStorage.getItem("token")
-            }
-        }
-    }else{
-        //Regresar en caso de no existir token
-        navigate('/home');
+    const headers = getAuthHeaders();
+    if (!headers) {
+        navigate('/login');
     }
 
     const [students, setStudents] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:8081/student`, headers).then(res => {
-            console.log("Prueba");
-            console.log(res.data.message);
             setStudents(res.data.message);
+        })
+        .catch(err => {
+            alert("Ocurrio un error en el sistema, por favor intente de nuevo.")
+            navigate('/login');
         });
         
     }, [])

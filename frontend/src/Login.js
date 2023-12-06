@@ -16,26 +16,6 @@ function Login(){
         setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
     }
 
-    // const handleSubmit =(event) => {
-    //     event.preventDefault();
-    //     // setErrors(Validation(values));
-
-    //     const err = Validation(values);
-    //     setErrors(err);
-
-    //     if(errors.email === "" && errors.password ===""){
-    //         axios.post('http://localhost:8081/login', values)
-    //         .then(res => {
-    //             if(res.data === "Success"){
-    //                 navigate('/home');
-    //             } else {
-    //                 alert("No record existed");
-    //             }
-    //         })
-    //         .catch(err => console.log(err));
-    //     }
-    // } 
-
     const handleSubmit =(event) => {
         event.preventDefault();
         const err = Validation(values); 
@@ -49,8 +29,10 @@ function Login(){
                 if(res.data.code === 200){
                     localStorage.setItem("token", res.data.message);
                     navigate('/home');
-                } else {
+                } else if (res.data.code === 401) {
                     alert("Usuario y/o contraseña incorrecto. Por favor intente de nuevo.");
+                } else {
+                    alert("Ha ocurrido un error. Por favor, intente de nuevo.");
                 }
             })
             .catch(err => console.log(err));

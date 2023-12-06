@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import {getAuthHeaders} from './GetAuthHeaders';
 import {Link, useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 
@@ -7,18 +8,9 @@ function EditCertificate() {
     let {id} = useParams();
     
     const navigate = useNavigate();
-    var headers = {};
-
-    //Obtener el token desde headers
-    if(localStorage.getItem("token")){
-        headers = {
-            headers: {
-                'Authorization': "bearer " + localStorage.getItem("token")
-            }
-        }
-    }else{
-        //Regresar en caso de no existir token
-        navigate('/home');
+    const headers = getAuthHeaders();
+    if (!headers) {
+        navigate('/login');
     }
 
 
@@ -26,8 +18,6 @@ function EditCertificate() {
 
     useEffect(() => {
         axios.get(`http://localhost:8081/certificate/${id}`,headers).then(res => {
-            console.log("Prueba");
-            console.log(res.data.message[0]);
             const certificateData = res.data.message[0];
 
             // Convertir las fechas a formato ISOString
@@ -36,7 +26,10 @@ function EditCertificate() {
 
             // Actualizar el estado certificate con las fechas en formato ISOString
             setCertificate(certificateData);
-            console.log("Prueba");
+        })
+        .catch(err => {
+            alert("Ocurrio un error en el sistema, por favor intente de nuevo.")
+            navigate('/login');
         });
         
     }, [id]);
@@ -72,8 +65,8 @@ function EditCertificate() {
 
     return (
         <div className='container mt-5'>
-            <div className='row'>
-                <div className='col-md-12'>
+            <div className='row justify-content-center'>
+                <div className='col-md-5'>
                     <div className='card'>
                         <div className='card-header'>
                             <h4 className='mb-4'>Editar certificado

@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import {Link, useNavigate, useParams} from 'react-router-dom'
+import {getAuthHeaders} from './GetAuthHeaders';
 import axios from 'axios';
 
 function StudentAddCert(){
 
     const navigate = useNavigate();
-    var headers = {};
-
-    //Obtener el token desde headers
-    if(localStorage.getItem("token")){
-        headers = {
-            headers: {
-                'Authorization': "bearer " + localStorage.getItem("token")
-            }
-        }
-    }else{
-        //Regresar en caso de no existir token
-        navigate('/home');
+    const headers = getAuthHeaders();
+    if (!headers) {
+        navigate('/login');
     }
 
     const handleInput = (e) => {
@@ -56,7 +48,7 @@ function StudentAddCert(){
     useEffect(() => {
 
         //Obtener info del estudiante
-        axios.get(`http://localhost:8081/student/${id}`).then(res => {
+        axios.get(`http://localhost:8081/student/${id}`, headers).then(res => {
             const studentData = res.data.message[0];
             setStudent(studentData);
         })
@@ -65,7 +57,7 @@ function StudentAddCert(){
         });
 
         //Obtener info de los certificados
-        axios.get(`http://localhost:8081/certificate`).then(res => {
+        axios.get(`http://localhost:8081/certificate`, headers).then(res => {
             const certificatesData = res.data.message;
             setCertificates(certificatesData);
 
@@ -80,12 +72,11 @@ function StudentAddCert(){
 
     var certificatesDetails = "";
     certificatesDetails = certificates.map(result => ({id:result.certificadoID, nombre:result.nombre}));
-    console.log(certificatesDetails);
 
     return (
         <div className='container mt-5'>
-            <div className='row'>
-                <div className='col-md-12'>
+            <div className='row justify-content-center'>
+                <div className='col-md-4'>
                     <div className='card'>
                         <div className='card-header'>
                             <h4 className='mb-4'>Agregar certificado

@@ -1,9 +1,15 @@
 import React from 'react'
+import {getAuthHeaders} from './GetAuthHeaders';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Home() {
 
     const navigate = useNavigate();
+    
+    const headers = getAuthHeaders();
+    if (!headers) {
+        navigate('/login');
+    }
     
     const handleCert =(event) => {
         event.preventDefault();

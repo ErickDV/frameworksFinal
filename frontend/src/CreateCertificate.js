@@ -1,22 +1,14 @@
 import React, {useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+import {getAuthHeaders} from './GetAuthHeaders';
 import axios from 'axios';
 
 function CreateCertificate() {
 
     const navigate = useNavigate();
-    var headers = {};
-
-    //Obtener el token desde headers
-    if(localStorage.getItem("token")){
-        headers = {
-            headers: {
-                'Authorization': "bearer " + localStorage.getItem("token")
-            }
-        }
-    }else{
-        //Regresar en caso de no existir token
-        navigate('/home');
+    const headers = getAuthHeaders();
+    if (!headers) {
+        navigate('/login');
     }
 
     const [certificate, setCertificate] = useState({
@@ -50,6 +42,10 @@ function CreateCertificate() {
             if(error.response){
                 alert(error.response.data.message);
             }
+        })
+        .catch(err => {
+            alert("Ocurrio un error en el sistema, por favor intente de nuevo.")
+            navigate('/login');
         });
     }
 
@@ -58,8 +54,8 @@ function CreateCertificate() {
 
     return (
         <div className='container mt-5'>
-            <div className='row'>
-                <div className='col-md-12'>
+            <div className='row justify-content-center'>
+                <div className='col-md-5'>
                     <div className='card'>
                         <div className='card-header'>
                             <h4 className='mb-4'>Añadir certificado
