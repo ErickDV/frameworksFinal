@@ -29,7 +29,12 @@ function Login(){
                 if(res.data.code === 200){
                     localStorage.setItem("token", res.data.token);
                     localStorage.setItem("roleToken", res.data.roleToken);
-                    navigate('/home');
+                    if(res.data.route === 1){
+                        navigate('/home');
+                    } else {
+                        localStorage.setItem("studentID", res.data.studentID);
+                        navigate(`/studentHome/${values.email}`)
+                    }
                 } else if (res.data.code === 401) {
                     alert("Usuario y/o contraseña incorrecto. Por favor intente de nuevo.");
                 } else {

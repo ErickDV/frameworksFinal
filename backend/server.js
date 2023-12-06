@@ -6,6 +6,7 @@ const app = express();
 
 //Routers
 const user = require('./routes/user');
+const studentHome = require('./routes/studentHome');
 const student = require('./routes/student');
 const certificate = require('./routes/certificate');
 const relations = require('./routes/relations');
@@ -25,6 +26,7 @@ app.use(express.urlencoded({extended:true}));
 app.get("/", index);
 app.use("/user", user);
 app.use(auth);
+app.use("/studentHome", authPage(["Estudiante"]), studentHome);
 app.use("/student", authPage(["Admin"]), student);
 app.use("/certificate", authPage(["Admin"]), certificate);
 app.use("/relations", authPage(["Admin"]), relations);

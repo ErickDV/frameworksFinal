@@ -1,6 +1,7 @@
 import React from 'react'
 import Login from './Login'
 import Home from './Home'
+import StudentHome from './StudentHome'
 import Students from './Students'
 import StudentsDetails from './StudentDetails'
 import StudentsAddCert from './StudentAddCert'
@@ -16,6 +17,7 @@ function App(){
         <Route path='/' element={<Login/>}> </Route>
         <Route path='/login' element={<Login/>}> </Route>
         <Route path='/home' element={<Home/>}> </Route>
+        <Route path='/studentHome/:id' element={<StudentHome/>}> </Route>
         <Route path='/students' element={<Students/>}> </Route>
         <Route path='/students/details/:id' element={<StudentsDetails/>}> </Route>
         <Route path='/students/addCert/:id' element={<StudentsAddCert/>}> </Route>

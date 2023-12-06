@@ -11,9 +11,14 @@ user.post('/login', (req,res,next)=>{
         } if (data.length > 0){
             const id = data[0].usuarioID;
             const role = data[0].rol;
+            let route = null;
             const token = jwt.sign({id},"debugkey",{});
             const roleToken = jwt.sign({role},"debugkey",{});
-            return res.status(200).json({code:200, token:token, roleToken:roleToken});
+            if (role === 'Admin'){
+                return res.status(200).json({code:200, token:token, roleToken:roleToken, route:1});
+            } else {
+                return res.status(200).json({code:200, token:token, roleToken:roleToken, route:2, studentID:id});
+            }
         } else {
             return res.status(200).json({code:401,message:"Usuario y/o contraseña incorrectos."});
         }
