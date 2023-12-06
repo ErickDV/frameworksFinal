@@ -22,7 +22,7 @@ function StudentHome() {
         })
         .catch(error => {
             alert("Hubo un error al cargar los datos. ",error);
-            navigate('/students')
+            navigate('/login')
         });
 
         axios.get(`http://localhost:8081/studentHome/relations/${id}`, headers, {
@@ -78,7 +78,7 @@ function StudentHome() {
                     <div className='card'>
                         <div className='card-header'>
                             <h4 className='mb-4'>Detalles estudiante
-                                <Link to="/students" className='btn btn-danger float-end'>Volver</Link>
+                                <Link to="/login" className='btn btn-danger float-end'>Volver</Link>
                             </h4>
                         </div>
                         <div className='card-body'>
