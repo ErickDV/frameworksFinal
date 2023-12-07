@@ -2,6 +2,7 @@ const express = require('express');
 const relations = express.Router();
 const db = require('../config/database');
 
+//Obtener todo
 relations.get('/', async (req,res,next)=>{
     const rltns = await db.query("SELECT * FROM relaciones");
     return res.status(200).json({code:200,message:rltns});

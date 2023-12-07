@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const authPage = (permissions) => {
     return(req, res, next) => {
+        //Obtiene el token de los headers
         const roleToken = req.headers.role.split(" ")[1];
         jwt.verify(roleToken, "debugkey", (err, decoded) => {
             if (err) {

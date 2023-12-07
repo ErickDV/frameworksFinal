@@ -55,17 +55,17 @@ function Login(){
                     </div>
                     <div className='mb-3'>
                         <label htmlFor='email'><strong>Expediente</strong></label>
-                        <input type='number' placeholder='Enter email' name='email'
+                        <input type='number' placeholder='Ingresa tu expediente' name='email'
                         onChange={handleInput} className='form-control rounded-0'/>
                         {errors.email && <span className='text-danger'> {errors.email}</span>}
                     </div>
                     <div className='mb-3'>
                         <label htmlFor='password'><strong>Contraseña</strong></label>
-                        <input type='password' placeholder='Enter password' name='password'
+                        <input type='password' placeholder='Ingresa tu contraseña' name='password'
                         onChange={handleInput} className='form-control rounded-0'/>
                         {errors.password && <span className='text-danger'> {errors.password}</span>}
                     </div>
-                    <button type='submit' className='btn btn-success w-100 rounded-0'> <strong>Log in </strong></button>
+                    <button type='submit' className='btn btn-success w-100 rounded-0'> <strong>Iniciar sesión</strong></button>
 
                 </form>
             </div>

@@ -4,9 +4,9 @@ const db = require('../config/database');
 
 //Buscar por ID
 studentHome.get('/:id([0-9]{1,6})', async (req,res,next) => {
-    const id = req.params.id;
+    const id = req.params.id; //Verificar que los datos solicitados coincidan con la información del token
     if(req.user.id != id){
-        return res.status(403).json({ message: 'No tienes permiso para acceder a estos datos' });
+        return res.status(401).json({ message: 'No tienes permiso para acceder a estos datos' });
     }
     try {
         const stdnt = await db.query("SELECT * FROM usuarios WHERE usuarioID = ? AND rol = 'Estudiante'", [id]);

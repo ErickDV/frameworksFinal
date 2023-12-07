@@ -12,6 +12,7 @@ function Students() {
     }
 
     const [students, setStudents] = useState([]);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         axios.get(`http://localhost:8081/student`, headers).then(res => {
@@ -25,7 +26,7 @@ function Students() {
     }, [])
 
     var studentDetails = "";
-    studentDetails = students.map( (item,index) => {
+    studentDetails = students.filter(item => item.apellidos.toLowerCase().includes(search.toLowerCase())).map((item, index) => {
         return (
             <tr key={index}>
                 <td>{item.usuarioID}</td>
@@ -54,6 +55,7 @@ function Students() {
                             <h4 className='mb-4'>Lista de estudiantes
                                 <Link to="/home" className='btn btn-danger float-end'>Volver</Link>
                             </h4>
+                            <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar apellido(s)..." />
                         </div>
                         <div className='card-body'>
                             <table className='table table-striped'>
