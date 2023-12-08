@@ -1,4 +1,4 @@
-//Funcion para obtener el token a traves de localStorage
+//Funcion para obtener los token (usuario y rol) a traves de localStorage
 export function getAuthHeaders() {
     let headers = null;
 

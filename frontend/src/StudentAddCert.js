@@ -11,6 +11,7 @@ function StudentAddCert(){
         navigate('/login');
     }
 
+    // Función para manejar el cambio de los inputs del formulario
     const handleInput = (e) => {
         setSelectedCertificate(e.target.value);
     };
@@ -21,6 +22,7 @@ function StudentAddCert(){
     const [certificates, setCertificates] = useState([]);
     const [selectedCertificate, setSelectedCertificate] = useState();
 
+    // Función para guardar la relación entre el estudiante y el certificad
     const saveRelation = (e) => {
         e.preventDefault();
 

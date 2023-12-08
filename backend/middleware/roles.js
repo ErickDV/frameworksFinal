@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
+//Se le pasa el arreglo de roles que tienen acceso
 const authPage = (permissions) => {
     return(req, res, next) => {
         //Obtiene el token de los headers

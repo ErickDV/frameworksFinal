@@ -7,6 +7,7 @@ function Students() {
 
     const navigate = useNavigate();
     const headers = getAuthHeaders();
+    
     if (!headers) {
         navigate('/login');
     }

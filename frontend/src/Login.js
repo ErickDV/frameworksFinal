@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import {Link} from 'react-router-dom'
 import Validation from './LoginValidation';
 import axios from 'axios';
 
@@ -12,10 +11,13 @@ function Login(){
 
     const navigate = useNavigate();
     const [errors, setErrors] = useState({})
+
+    // Función para manejar el cambio de los inputs del formulario
     const handleInput =(event)=>{
         setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
     }
 
+    // Función para manejar el envío del formulario
     const handleSubmit =(event) => {
         event.preventDefault();
         const err = Validation(values); 
